@@ -1,0 +1,338 @@
+/* Expense & Budget Visualizer — styles.css
+   All style declarations for the app live here (Requirement 6.1).
+*/
+
+/* ============================================================
+   1. CSS Custom Properties
+   ============================================================ */
+:root {
+  --color-food: #FF6384;
+  --color-transport: #36A2EB;
+  --color-fun: #FFCE56;
+}
+
+/* ============================================================
+   2. Global Reset
+   ============================================================ */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* ============================================================
+   3. Base Typography
+   ============================================================ */
+body {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, sans-serif;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: #1a1a2e;
+  background-color: #f4f6f9;
+}
+
+h2 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+}
+
+/* ============================================================
+   4. Utility Classes
+   ============================================================ */
+.hidden {
+  display: none;
+}
+
+/* ============================================================
+   5. Balance Display
+   ============================================================ */
+#balance-display {
+  width: 100%;
+  background-color: #1a1a2e;
+  color: #ffffff;
+  text-align: center;
+  padding: 1.5rem 1rem;
+}
+
+#balance-display p {
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  opacity: 0.75;
+  margin-bottom: 0.25rem;
+}
+
+#balance-amount {
+  display: block;
+  font-size: 2.5rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+/* ============================================================
+   6. Input Form — fields, labels, error spans, submit button
+   (Requirements 1.1, 1.4)
+   ============================================================ */
+#input-section {
+  padding: 1.5rem 1rem;
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+#transaction-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* Stacked label → input/select → error layout */
+.field-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.field-group label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #1a1a2e;
+}
+
+.field-group input,
+.field-group select {
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  font-size: 1rem;
+  font-family: inherit;
+  color: #1a1a2e;
+  background-color: #ffffff;
+  border: 1.5px solid #c5cad3;
+  border-radius: 0.375rem;
+  outline: none;
+  transition: border-color 0.15s ease;
+}
+
+.field-group input:focus,
+.field-group select:focus {
+  border-color: #1a1a2e;
+}
+
+/* Error spans — hidden when empty, visible (red) when non-empty */
+.error {
+  font-size: 0.8rem;
+  color: #d93025;
+  overflow: hidden;
+  /* Default: take up no vertical space when empty */
+  height: 0;
+  min-height: 0;
+}
+
+.error:not(:empty) {
+  height: auto;
+  min-height: 1.2em;
+}
+
+/* Submit button */
+#transaction-form button[type="submit"] {
+  align-self: flex-start;
+  padding: 0.625rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  font-family: inherit;
+  color: #ffffff;
+  background-color: #1a1a2e;
+  border: none;
+  border-radius: 0.375rem;
+  cursor: pointer;
+  transition: background-color 0.15s ease, transform 0.1s ease;
+}
+
+#transaction-form button[type="submit"]:hover {
+  background-color: #2d2d50;
+}
+
+#transaction-form button[type="submit"]:active {
+  transform: scale(0.98);
+}
+
+/* ============================================================
+   7. Transaction List — list items, amount, category badge,
+      delete button
+   (Requirements 2.1, 2.5, 2.6)
+   ============================================================ */
+#transaction-section {
+  padding: 1.5rem 1rem;
+}
+
+#transaction-list {
+  list-style: none;
+  max-height: 400px;
+  overflow-y: auto;
+  border: 1.5px solid #e0e4ea;
+  border-radius: 0.375rem;
+  background-color: #ffffff;
+}
+
+/* Empty-state message rendered inside the <ul> */
+#transaction-list .empty-state {
+  padding: 1.25rem 1rem;
+  text-align: center;
+  color: #6b7280;
+  font-size: 0.9rem;
+}
+
+/* Each transaction row */
+#transaction-list li {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid #e0e4ea;
+}
+
+#transaction-list li:last-child {
+  border-bottom: none;
+}
+
+/* Item name — takes all remaining space */
+.transaction-name {
+  flex: 1 1 0;
+  font-size: 0.9375rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: #1a1a2e;
+}
+
+/* Formatted amount */
+.transaction-amount {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  white-space: nowrap;
+  color: #1a1a2e;
+}
+
+/* Category badge */
+.category-badge {
+  display: inline-block;
+  padding: 0.2em 0.6em;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  border-radius: 9999px;
+  white-space: nowrap;
+  color: #1a1a2e;
+  background-color: #e0e4ea; /* default fallback */
+}
+
+.category-badge[data-category="Food"] {
+  background-color: var(--color-food);
+  color: #ffffff;
+}
+
+.category-badge[data-category="Transport"] {
+  background-color: var(--color-transport);
+  color: #ffffff;
+}
+
+.category-badge[data-category="Fun"] {
+  background-color: var(--color-fun);
+  color: #1a1a2e;
+}
+
+/* Delete button — right-aligned, visually distinct (danger) */
+.delete-btn {
+  flex-shrink: 0;
+  margin-left: auto;
+  padding: 0.375rem 0.75rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  font-family: inherit;
+  color: #ffffff;
+  background-color: #d93025;
+  border: none;
+  border-radius: 0.375rem;
+  cursor: pointer;
+  transition: background-color 0.15s ease, transform 0.1s ease;
+}
+
+.delete-btn:hover {
+  background-color: #b3251d;
+}
+
+.delete-btn:active {
+  transform: scale(0.97);
+}
+
+/* ============================================================
+   8. Chart Section — responsive canvas, placeholder text
+   (Requirements 4.5)
+   ============================================================ */
+#chart-section {
+  flex: 1 1 0;
+  padding: 1.5rem 1rem;
+}
+
+#pie-chart {
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+#chart-placeholder {
+  text-align: center;
+  color: #6b7280;
+  font-style: italic;
+  font-size: 0.9rem;
+  padding: 2rem 0;
+}
+
+/* ============================================================
+   9. Warning Banner — inline, non-blocking, non-modal
+   (Requirements 5.4, 5.5, 5.6)
+   ============================================================ */
+.warning {
+  margin-top: 1rem;
+  padding: 0.75rem 1rem;
+  font-size: 0.875rem;
+  color: #856404;
+  background-color: #fff3cd;
+  border: 1px solid #ffc107;
+  border-left: 4px solid #ffc107;
+  border-radius: 0.375rem;
+  /* In-flow — not fixed/absolute, not a modal overlay */
+}
+
+/* ============================================================
+   10. Responsive Layout — two-column on wide, single-column on
+       narrow viewports using CSS Grid
+   (Requirement 7.1)
+   ============================================================ */
+
+/* Wide viewport: transaction list (left) + chart (right) side-by-side */
+#main-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  padding: 0 1rem 1.5rem;
+  align-items: start;
+}
+
+/* Prevent grid children from overflowing their cell */
+#transaction-section,
+#chart-section {
+  min-width: 0;
+}
+
+/* Narrow viewport: stack sections vertically */
+@media (max-width: 600px) {
+  #main-content {
+    grid-template-columns: 1fr;
+  }
+}
